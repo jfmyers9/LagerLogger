@@ -23,5 +23,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.AddLagerActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

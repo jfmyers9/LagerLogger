@@ -1,14 +1,17 @@
 package com.jfmyers9.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jfmyers9.R;
+import com.jfmyers9.activity.AddLagerActivity;
 
 import roboguice.fragment.RoboFragment;
 
@@ -33,6 +36,17 @@ public class LagerHistoryFragment extends RoboFragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.add_lager:
+                openAddLager();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
@@ -40,5 +54,10 @@ public class LagerHistoryFragment extends RoboFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void openAddLager() {
+        Intent intent = new Intent(getActivity(), AddLagerActivity.class);
+        startActivityForResult(intent, 0);
     }
 }

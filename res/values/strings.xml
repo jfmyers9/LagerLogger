@@ -4,6 +4,10 @@
     <string name="app_name">Lager Logger</string>
     <string name="add_beer_entry">Add Beer</string>
     <string name="search_lager_history">Search History</string>
+    <string name="title_label">Name:</string>
+    <string name="aroma_label">Aroma:</string>
+    <string name="appearance_label">Appearance:</string>
+    <string name="taste_label">Taste:</string>
 
     <string-array name="sidebar_items">
         <item>Home</item>
