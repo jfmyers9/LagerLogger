@@ -3,13 +3,17 @@ package com.jfmyers9.activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.jfmyers9.R;
+import com.jfmyers9.fragment.LagerHistoryFragment;
 
 import roboguice.activity.RoboFragmentActivity;
 
@@ -18,6 +22,7 @@ public class DrawerActivity extends RoboFragmentActivity {
     private DrawerLayout drawerLayout;
     private ListView lv;
     private ActionBarDrawerToggle drawerToggle;
+    @Inject private Provider<LagerHistoryFragment> historyFragmentProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,14 @@ public class DrawerActivity extends RoboFragmentActivity {
 
         lv = (ListView) findViewById(R.id.left_drawer);
         lv.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, sidebarItems));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LagerHistoryFragment fragment = historyFragmentProvider.get();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
     @Override
