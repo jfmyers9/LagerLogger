@@ -2,4 +2,8 @@
 
 <resources>
     <string name="app_name">Lager Logger</string>
+
+    <string-array name="sidebar_items">
+        <item>Home</item>
+    </string-array>
 </resources>
