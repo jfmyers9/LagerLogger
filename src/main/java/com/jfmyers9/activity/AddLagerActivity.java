@@ -2,7 +2,6 @@ package com.jfmyers9.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -56,6 +55,9 @@ public class AddLagerActivity extends RoboActivity {
                 return true;
             case R.id.add_picture_button:
                 return addBeerPicture();
+            case R.id.cancel_button:
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
