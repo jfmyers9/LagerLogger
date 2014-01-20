@@ -5,16 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/beer_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop" />
+
+    <RatingBar
+        android:id="@+id/rate_beer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/beer_image" />
+
     <TextView
         android:id="@+id/title_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_label" />
+        android:text="@string/title_label"
+        android:layout_below="@id/rate_beer" />
 
     <EditText
         android:id="@+id/title_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/title_hint"
         android:layout_below="@id/title_label" />
 
     <TextView
@@ -28,6 +44,7 @@
         android:id="@+id/aroma_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/aroma_hint"
         android:layout_below="@id/aroma_label" />
 
     <TextView
@@ -41,6 +58,7 @@
         android:id="@+id/appearance_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/appearance_hint"
         android:layout_below="@id/appearance_label" />
 
     <TextView
@@ -54,6 +72,7 @@
         android:id="@+id/taste_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/taste_hint"
         android:layout_below="@id/taste_label" />
 
 </RelativeLayout>

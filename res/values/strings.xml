@@ -5,9 +5,16 @@
     <string name="add_beer_entry">Add Beer</string>
     <string name="search_lager_history">Search History</string>
     <string name="title_label">Name:</string>
+    <string name="title_hint">Enter the name of your beer.</string>
     <string name="aroma_label">Aroma:</string>
+    <string name="aroma_hint">Describe the aroma of your beer.</string>
     <string name="appearance_label">Appearance:</string>
+    <string name="appearance_hint">Describe the appearance of your beer.</string>
     <string name="taste_label">Taste:</string>
+    <string name="taste_hint">How does your beer taste?</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+    <string name="add_picture_button">Add Picture</string>
 
     <string-array name="sidebar_items">
         <item>Home</item>
