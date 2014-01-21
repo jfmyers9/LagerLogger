@@ -45,7 +45,7 @@ public class LagerHistoryFragmentTest {
         fragment.onOptionsItemSelected(menuItem);
         Intent expected = new Intent(activity, AddLagerActivity.class);
 
-        Intent next = shadowOf(activity).getNextStartedActivityForResult().intent;
+        Intent next = shadowOf(activity).getNextStartedActivity();
         assertTrue(next.equals(expected));
     }
 }

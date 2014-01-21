@@ -58,6 +58,6 @@ public class LagerHistoryFragment extends RoboFragment {
 
     private void openAddLager() {
         Intent intent = new Intent(getActivity(), AddLagerActivity.class);
-        startActivityForResult(intent, 0);
+        startActivity(intent);
     }
 }

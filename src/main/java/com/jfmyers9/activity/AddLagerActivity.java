@@ -8,9 +8,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.jfmyers9.LagerDatabaseHelper;
 import com.jfmyers9.R;
 
 import java.io.File;
@@ -25,6 +28,8 @@ public class AddLagerActivity extends RoboActivity {
     private static final int MAX_HEIGHT = 650;
 
     private ImageView beerImage;
+    private EditText nameText, aromaText, appearanceText, tasteText;
+    private RatingBar rating;
     private Uri imageUri;
 
     @Override
@@ -38,6 +43,11 @@ public class AddLagerActivity extends RoboActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         beerImage = (ImageView) findViewById(R.id.beer_image);
+        nameText = (EditText) findViewById(R.id.title_entry);
+        aromaText = (EditText) findViewById(R.id.aroma_entry);
+        appearanceText = (EditText) findViewById(R.id.appearance_entry);
+        tasteText = (EditText) findViewById(R.id.taste_entry);
+        rating = (RatingBar) findViewById(R.id.rate_beer);
     }
 
     @Override
@@ -49,13 +59,17 @@ public class AddLagerActivity extends RoboActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case android.R.id.home:
-                finish();
+                exitWithoutSave();
                 return true;
             case R.id.add_picture_button:
                 return addBeerPicture();
             case R.id.cancel_button:
+                exitWithoutSave();
+                return true;
+            case R.id.save_button:
+                saveEntry();
                 finish();
                 return true;
             default:
@@ -101,5 +115,24 @@ public class AddLagerActivity extends RoboActivity {
         CharSequence text = "SD Card not Mounted.";
         Toast.makeText(context, text, duration).show();
         return false;
+    }
+
+    private void exitWithoutSave() {
+        if (imageUri != null) {
+            File imageFile = new File(imageUri.getPath());
+            imageFile.delete();
+        }
+        finish();
+    }
+
+    private void saveEntry() {
+        String name = nameText.getText().toString();
+        String aroma = aromaText.getText().toString();
+        String appearance = appearanceText.getText().toString();
+        String taste = tasteText.getText().toString();
+        String ratingNum = "" + rating.getNumStars();
+
+        LagerDatabaseHelper dbHelper = new LagerDatabaseHelper(getApplicationContext());
+        dbHelper.addLagerEntry(name, aroma, appearance, taste, ratingNum, imageUri.toString());
     }
 }
