@@ -9,7 +9,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.jfmyers9.LagerDatabaseHelper;
 import com.jfmyers9.R;
 import com.jfmyers9.activity.AddLagerActivity;
 
@@ -54,6 +56,14 @@ public class LagerHistoryFragment extends RoboFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LagerDatabaseHelper dbHelper = new LagerDatabaseHelper(getActivity());
+        TextView tv = (TextView) getView().findViewById(R.id.history_text);
+        tv.setText(dbHelper.getAllLagerEntries().get(0).getName());
     }
 
     private void openAddLager() {
