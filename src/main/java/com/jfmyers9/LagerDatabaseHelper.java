@@ -46,7 +46,7 @@ public class LagerDatabaseHelper {
             long id = c.getInt(c.getColumnIndex(LagerOpenHelper.COLUMN_ID));
             LagerEntry lagerEntry = new LagerEntry(name, rating, aroma, appearance, taste, img);
             lagerEntry.setId(id);
-            lagerEntry.setCreated_at(created_at);
+            lagerEntry.setCreatedAt(created_at);
             result.add(lagerEntry);
             c.moveToNext();
         }
