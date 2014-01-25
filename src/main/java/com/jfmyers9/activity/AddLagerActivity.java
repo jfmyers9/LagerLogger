@@ -131,8 +131,9 @@ public class AddLagerActivity extends RoboActivity {
         String appearance = appearanceText.getText().toString();
         String taste = tasteText.getText().toString();
         String ratingNum = "" + rating.getNumStars();
+        String image = (imageUri != null) ? imageUri.toString() : "";
 
         LagerDatabaseHelper dbHelper = new LagerDatabaseHelper(getApplicationContext());
-        dbHelper.addLagerEntry(name, aroma, appearance, taste, ratingNum, imageUri.toString());
+        dbHelper.addLagerEntry(name, aroma, appearance, taste, ratingNum, image);
     }
 }

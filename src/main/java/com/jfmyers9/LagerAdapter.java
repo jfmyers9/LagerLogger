@@ -46,9 +46,13 @@ public class LagerAdapter extends BaseAdapter {
 
         TextView lagerName = (TextView) convertView.findViewById(R.id.grid_name);
         lagerName.setText(lager.getName());
-
         ImageView lagerImg = (ImageView) convertView.findViewById(R.id.grid_image);
-        lagerImg.setImageURI(Uri.parse(lager.getImage()));
+
+        if (lager.getImage().isEmpty()) {
+            lagerImg.setImageDrawable(context.getResources().getDrawable(R.drawable.lager_logger_icon));
+        } else {
+            lagerImg.setImageURI(Uri.parse(lager.getImage()));
+        }
         return convertView;
     }
 }
