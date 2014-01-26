@@ -3,18 +3,16 @@ package com.jfmyers9.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jfmyers9.LagerAdapter;
 import com.jfmyers9.LagerDatabaseHelper;
@@ -39,12 +37,21 @@ public class LagerHistoryFragment extends RoboFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lager_history, container, false);
-        LinearLayout interiorLayout = (LinearLayout) rootView.findViewById(R.id.grid_layout);
         LagerDatabaseHelper dbHelper = new LagerDatabaseHelper(getActivity());
         lagerList = dbHelper.getAllLagerEntries();
 
         GridView lagerGrid = (GridView) rootView.findViewById(R.id.lager_grid);
         lagerGrid.setAdapter(new LagerAdapter(getActivity(), lagerList));
+        lagerGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                LagerAdapter adapter = (LagerAdapter) parent.getAdapter();
+                LagerEntry clicked = (LagerEntry) adapter.getItem(position);
+                Toast toast = Toast.makeText(getActivity(), clicked.getName(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
         return rootView;
     }
@@ -57,7 +64,7 @@ public class LagerHistoryFragment extends RoboFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.add_lager:
                 openAddLager();
                 return true;
