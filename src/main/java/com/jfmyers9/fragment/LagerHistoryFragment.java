@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.jfmyers9.LagerAdapter;
 import com.jfmyers9.LagerDatabaseHelper;
 import com.jfmyers9.LagerEntry;
+import com.jfmyers9.LagerOpenHelper;
 import com.jfmyers9.R;
 import com.jfmyers9.activity.AddLagerActivity;
+import com.jfmyers9.activity.ViewLagerActivity;
 
 import java.util.ArrayList;
 
@@ -48,8 +48,7 @@ public class LagerHistoryFragment extends RoboFragment {
                                     int position, long id) {
                 LagerAdapter adapter = (LagerAdapter) parent.getAdapter();
                 LagerEntry clicked = (LagerEntry) adapter.getItem(position);
-                Toast toast = Toast.makeText(getActivity(), clicked.getName(), Toast.LENGTH_SHORT);
-                toast.show();
+                openLagerEntryViewActivity(clicked);
             }
         });
 
@@ -85,6 +84,23 @@ public class LagerHistoryFragment extends RoboFragment {
 
     private void openAddLager() {
         Intent intent = new Intent(getActivity(), AddLagerActivity.class);
+        startActivity(intent);
+    }
+
+    private void openLagerEntryViewActivity(LagerEntry clicked) {
+        Intent intent = new Intent(getActivity(), ViewLagerActivity.class);
+
+        Bundle arguments = new Bundle();
+        arguments.putString(LagerOpenHelper.COLUMN_NAME, clicked.getName());
+        arguments.putString(LagerOpenHelper.COLUMN_RATING, clicked.getRating());
+        arguments.putString(LagerOpenHelper.COLUMN_AROMA, clicked.getAroma());
+        arguments.putString(LagerOpenHelper.COLUMN_APPEARANCE, clicked.getAppearance());
+        arguments.putString(LagerOpenHelper.COLUMN_TASTE, clicked.getTaste());
+        arguments.putString(LagerOpenHelper.COLUMN_IMG, clicked.getImage());
+        arguments.putLong(LagerOpenHelper.COLUMN_ID, clicked.getId());
+        arguments.putString(LagerOpenHelper.COLUMN_CREATED_AT, clicked.getCreatedAt());
+
+        intent.putExtras(arguments);
         startActivity(intent);
     }
 }
