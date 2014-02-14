@@ -55,7 +55,6 @@ public class ViewLagerActivity extends Activity {
         String lagerAppearance = arguments.getString(LagerOpenHelper.COLUMN_APPEARANCE);
         String lagerTaste = arguments.getString(LagerOpenHelper.COLUMN_TASTE);
         int lagerRating = Integer.parseInt(arguments.getString(LagerOpenHelper.COLUMN_RATING));
-        System.err.println(lagerRating);
 
         if (!imageUri.isEmpty()) {
             beerImage.setImageURI(Uri.parse(imageUri));
