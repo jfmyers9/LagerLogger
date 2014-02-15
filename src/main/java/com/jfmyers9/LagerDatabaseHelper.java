@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.inject.Inject;
+
 import java.util.ArrayList;
 
 public class LagerDatabaseHelper {
@@ -12,6 +14,7 @@ public class LagerDatabaseHelper {
     private SQLiteDatabase database;
     private LagerOpenHelper dbHelper;
 
+    @Inject
     public LagerDatabaseHelper(Context context) {
         dbHelper = new LagerOpenHelper(context);
     }

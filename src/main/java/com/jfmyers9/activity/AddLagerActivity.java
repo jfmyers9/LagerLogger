@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.google.inject.Inject;
 import com.jfmyers9.LagerDatabaseHelper;
 import com.jfmyers9.R;
 
@@ -21,16 +22,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 
 public class AddLagerActivity extends RoboActivity {
 
     private static final int CAMERA_REQUEST = 1877;
     private static final int MAX_HEIGHT = 650;
 
-    private ImageView beerImage;
-    private EditText nameText, aromaText, appearanceText, tasteText;
-    private RatingBar rating;
+    @InjectView(R.id.beer_image) private ImageView beerImage;
+    @InjectView(R.id.title_entry) private EditText nameText;
+    @InjectView(R.id.aroma_entry) private EditText aromaText;
+    @InjectView(R.id.appearance_entry) private EditText appearanceText;
+    @InjectView(R.id.taste_entry) private EditText tasteText;
+    @InjectView(R.id.rate_beer) private RatingBar rating;
     private Uri imageUri;
+
+    @Inject LagerDatabaseHelper dbHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,13 +48,6 @@ public class AddLagerActivity extends RoboActivity {
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        beerImage = (ImageView) findViewById(R.id.beer_image);
-        nameText = (EditText) findViewById(R.id.title_entry);
-        aromaText = (EditText) findViewById(R.id.aroma_entry);
-        appearanceText = (EditText) findViewById(R.id.appearance_entry);
-        tasteText = (EditText) findViewById(R.id.taste_entry);
-        rating = (RatingBar) findViewById(R.id.rate_beer);
     }
 
     @Override
@@ -133,7 +133,6 @@ public class AddLagerActivity extends RoboActivity {
         String ratingNum = "" + (int) rating.getRating();
         String image = (imageUri != null) ? imageUri.toString() : "";
 
-        LagerDatabaseHelper dbHelper = new LagerDatabaseHelper(getApplicationContext());
         dbHelper.addLagerEntry(name, aroma, appearance, taste, ratingNum, image);
     }
 }
