@@ -1,6 +1,5 @@
 package com.jfmyers9.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,18 +7,23 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.jfmyers9.LagerEntry;
 import com.jfmyers9.LagerOpenHelper;
 import com.jfmyers9.R;
+import com.jfmyers9.fragment.LagerHistoryFragment;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowIntent;
+import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -33,7 +37,6 @@ public class ViewLagerActivityTest {
     private String beer_taste = "Delicious";
     private String beer_rating = "4";
 
-    @Mock private MenuItem menuItem;
     private ImageView beerImage;
     private TextView nameText;
     private TextView aromaText;
@@ -43,13 +46,11 @@ public class ViewLagerActivityTest {
 
     @Before
     public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        menuItem = mock(MenuItem.class);
         controller = Robolectric.buildActivity(ViewLagerActivity.class);
         Intent intent = new Intent(Robolectric.getShadowApplication().getApplicationContext(), ViewLagerActivity.class);
         intent.putExtras(setupBundle());
 
-        activity = controller.withIntent(intent).create().get();
+        activity = controller.withIntent(intent).create().start().get();
         beerImage = (ImageView) activity.findViewById(R.id.beer_image);
         nameText = (TextView) activity.findViewById(R.id.title_entry);
         aromaText = (TextView) activity.findViewById(R.id.aroma_entry);
@@ -76,14 +77,8 @@ public class ViewLagerActivityTest {
 
     public Bundle setupBundle() {
         Bundle arguments = new Bundle();
-        arguments.putString(LagerOpenHelper.COLUMN_NAME, beer_name);
-        arguments.putString(LagerOpenHelper.COLUMN_RATING, beer_rating);
-        arguments.putString(LagerOpenHelper.COLUMN_AROMA, beer_aroma);
-        arguments.putString(LagerOpenHelper.COLUMN_APPEARANCE, beer_appearance);
-        arguments.putString(LagerOpenHelper.COLUMN_TASTE, beer_taste);
-        arguments.putString(LagerOpenHelper.COLUMN_IMG, "");
-        arguments.putLong(LagerOpenHelper.COLUMN_ID, 1);
-        arguments.putString(LagerOpenHelper.COLUMN_CREATED_AT, "sometime");
+        LagerEntry clicked = new LagerEntry(beer_name, beer_rating, beer_aroma, beer_appearance, beer_taste, "");
+        arguments.putParcelable(LagerHistoryFragment.LAGER_KEY, clicked);
         return arguments;
     }
 }

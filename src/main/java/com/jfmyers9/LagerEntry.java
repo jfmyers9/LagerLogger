@@ -1,6 +1,9 @@
 package com.jfmyers9;
 
-public class LagerEntry {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class LagerEntry implements Parcelable{
     private String name;
     private String rating;
     private String aroma;
@@ -83,4 +86,44 @@ public class LagerEntry {
     public void setCreatedAt(String created_at) {
         this.created_at = created_at;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(rating);
+        dest.writeString(aroma);
+        dest.writeString(appearance);
+        dest.writeString(taste);
+        dest.writeString(image);
+        dest.writeString(created_at);
+        dest.writeLong(id);
+    }
+
+    private LagerEntry(Parcel in) {
+        name = in.readString();
+        rating = in.readString();
+        aroma = in.readString();
+        appearance = in.readString();
+        taste = in.readString();
+        image = in.readString();
+        created_at = in.readString();
+        id = in.readLong();
+    }
+
+    public static final Parcelable.Creator<LagerEntry> CREATOR = new Parcelable.Creator<LagerEntry>() {
+        @Override
+        public LagerEntry createFromParcel(Parcel source) {
+            return new LagerEntry(source);
+        }
+
+        @Override
+        public LagerEntry[] newArray(int size) {
+            return new LagerEntry[size];
+        }
+    };
 }

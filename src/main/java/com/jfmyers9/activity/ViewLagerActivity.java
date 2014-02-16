@@ -8,27 +8,24 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
-import com.jfmyers9.LagerOpenHelper;
+import com.jfmyers9.LagerEntry;
 import com.jfmyers9.R;
+import com.jfmyers9.fragment.LagerHistoryFragment;
 
-public class ViewLagerActivity extends Activity {
-    private ImageView beerImage;
-    private TextView nameText;
-    private TextView aromaText;
-    private TextView appearanceText;
-    private RatingBar rating;
-    private TextView tasteText;
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
+
+public class ViewLagerActivity extends RoboActivity {
+    @InjectView(R.id.beer_image) private ImageView beerImage;
+    @InjectView(R.id.title_entry) private TextView nameText;
+    @InjectView(R.id.aroma_entry) private TextView aromaText;
+    @InjectView(R.id.appearance_entry) private TextView appearanceText;
+    @InjectView(R.id.rate_beer) private RatingBar rating;
+    @InjectView(R.id.taste_entry) private TextView tasteText;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_lager_layout);
-
-        beerImage = (ImageView) findViewById(R.id.beer_image);
-        nameText = (TextView) findViewById(R.id.title_entry);
-        aromaText = (TextView) findViewById(R.id.aroma_entry);
-        appearanceText = (TextView) findViewById(R.id.appearance_entry);
-        tasteText = (TextView) findViewById(R.id.taste_entry);
-        rating = (RatingBar) findViewById(R.id.rate_beer);
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,22 +46,18 @@ public class ViewLagerActivity extends Activity {
     /* Private Methods */
 
     private void prefillLagerInformation(Bundle arguments) {
-        String imageUri = arguments.getString(LagerOpenHelper.COLUMN_IMG);
-        String lagerName = arguments.getString(LagerOpenHelper.COLUMN_NAME);
-        String lagerAroma = arguments.getString(LagerOpenHelper.COLUMN_AROMA);
-        String lagerAppearance = arguments.getString(LagerOpenHelper.COLUMN_APPEARANCE);
-        String lagerTaste = arguments.getString(LagerOpenHelper.COLUMN_TASTE);
-        int lagerRating = Integer.parseInt(arguments.getString(LagerOpenHelper.COLUMN_RATING));
+        LagerEntry currentEntry = arguments.getParcelable(LagerHistoryFragment.LAGER_KEY);
+        int lagerRating = Integer.parseInt(currentEntry.getRating());
 
-        if (!imageUri.isEmpty()) {
-            beerImage.setImageURI(Uri.parse(imageUri));
+        if (!currentEntry.getImage().isEmpty()) {
+            beerImage.setImageURI(Uri.parse(currentEntry.getImage()));
         }
-        nameText.setText(lagerName);
-        aromaText.setText(lagerAroma);
-        appearanceText.setText(lagerAppearance);
-        tasteText.setText(lagerTaste);
+        nameText.setText(currentEntry.getName());
+        aromaText.setText(currentEntry.getAroma());
+        appearanceText.setText(currentEntry.getAppearance());
+        tasteText.setText(currentEntry.getTaste());
         rating.setRating(lagerRating);
 
-        setTitle(lagerName);
+        setTitle(currentEntry.getName());
     }
 }

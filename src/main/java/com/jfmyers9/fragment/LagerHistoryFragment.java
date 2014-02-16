@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import roboguice.fragment.RoboFragment;
 
 public class LagerHistoryFragment extends RoboFragment {
+    public static final String LAGER_KEY = "lager_entry";
+
     private ArrayList<LagerEntry> lagerList;
 
     @Override
@@ -91,15 +93,7 @@ public class LagerHistoryFragment extends RoboFragment {
         Intent intent = new Intent(getActivity(), ViewLagerActivity.class);
 
         Bundle arguments = new Bundle();
-        arguments.putString(LagerOpenHelper.COLUMN_NAME, clicked.getName());
-        arguments.putString(LagerOpenHelper.COLUMN_RATING, clicked.getRating());
-        arguments.putString(LagerOpenHelper.COLUMN_AROMA, clicked.getAroma());
-        arguments.putString(LagerOpenHelper.COLUMN_APPEARANCE, clicked.getAppearance());
-        arguments.putString(LagerOpenHelper.COLUMN_TASTE, clicked.getTaste());
-        arguments.putString(LagerOpenHelper.COLUMN_IMG, clicked.getImage());
-        arguments.putLong(LagerOpenHelper.COLUMN_ID, clicked.getId());
-        arguments.putString(LagerOpenHelper.COLUMN_CREATED_AT, clicked.getCreatedAt());
-
+        arguments.putParcelable(LAGER_KEY, clicked);
         intent.putExtras(arguments);
         startActivity(intent);
     }
