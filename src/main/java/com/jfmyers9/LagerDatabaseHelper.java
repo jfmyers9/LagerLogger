@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class LagerDatabaseHelper {
     private static final String QUERY_ALL = "SELECT * FROM " + LagerOpenHelper.DATABASE_NAME + ";";
     private static final String QUERY_SINGLE = "SELECT * FROM " + LagerOpenHelper.DATABASE_NAME + " WHERE id = ";
-    private static final String EDIT_CLAUSE = "id = ?";
+    private static final String BY_ID_CLAUSE = "id = ?";
     private LagerOpenHelper dbHelper;
 
     @Inject
@@ -47,7 +47,7 @@ public class LagerDatabaseHelper {
 
         String[] whereArgs = { Long.toString(id) };
 
-        return db.update(LagerOpenHelper.DATABASE_NAME, cv, EDIT_CLAUSE, whereArgs);
+        return db.update(LagerOpenHelper.DATABASE_NAME, cv, BY_ID_CLAUSE, whereArgs);
     }
     
     public ArrayList<LagerEntry> getAllLagerEntries() {
@@ -67,6 +67,13 @@ public class LagerDatabaseHelper {
         Cursor c = db.rawQuery(QUERY_SINGLE + id + ";", null);
         c.moveToFirst();
         return buildLagerEntry(c);
+    }
+
+
+    public int destroyLagerEntryById(long id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] whereArgs = { Long.toString(id) };
+        return db.delete(LagerOpenHelper.DATABASE_NAME, BY_ID_CLAUSE, whereArgs);
     }
 
     /* Private Methods */

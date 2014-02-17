@@ -67,6 +67,10 @@ public class ViewLagerActivity extends RoboActivity {
             case R.id.edit_button:
                 openEditLager();
                 return true;
+            case R.id.delete_button:
+                destroyCurrentLager();
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
@@ -97,5 +101,9 @@ public class ViewLagerActivity extends RoboActivity {
 
     private void refreshCurrentEntry() {
         currentEntry = dbHelper.getLagerEntryById(currentEntry.getId());
+    }
+
+    private void destroyCurrentLager() {
+        dbHelper.destroyLagerEntryById(currentEntry.getId());
     }
 }
