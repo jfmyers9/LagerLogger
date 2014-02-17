@@ -73,6 +73,26 @@ public class ViewLagerActivityTest {
         assertTrue(nameText.getText().toString().equals(beer_name));
     }
 
+    @Test
+    public void testThatClickingTheEditActionBarButtonOpensTheEditActivity() throws Exception {
+        MenuItem item = new TestMenuItem(R.id.edit_button);
+        activity.onOptionsItemSelected(item);
+
+        ShadowActivity shadowActivity = Robolectric.shadowOf(activity);
+        Intent startedIntent = shadowActivity.getNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(startedIntent);
+
+        assertThat(shadowIntent.getComponent().getClassName(), equalTo(EditLagerActivity.class.getName()));
+        assertTrue(shadowIntent.getExtras().getParcelable(LagerHistoryFragment.LAGER_KEY) != null);
+    }
+
+    @Test
+    public void testThatClickingOnTheIconFinishesTheActivity() throws Exception {
+        MenuItem item = new TestMenuItem(android.R.id.home);
+        activity.onOptionsItemSelected(item);
+        assertTrue(activity.isFinishing());
+    }
+
     /* Private Methods */
 
     public Bundle setupBundle() {

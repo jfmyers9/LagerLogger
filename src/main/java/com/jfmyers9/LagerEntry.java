@@ -1,16 +1,13 @@
 package com.jfmyers9;
 
+import android.app.Application;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class LagerEntry implements Parcelable{
-    private String name;
-    private String rating;
-    private String aroma;
-    private String appearance;
-    private String taste;
-    private String image;
-    private String created_at;
+import com.google.inject.Inject;
+
+public class LagerEntry implements Parcelable {
+    private String name, rating, aroma, appearance, taste, image, created_at;
     private long id;
 
     public LagerEntry(String name, String rating, String aroma,

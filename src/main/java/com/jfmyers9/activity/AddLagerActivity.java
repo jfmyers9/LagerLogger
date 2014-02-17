@@ -29,15 +29,15 @@ public class AddLagerActivity extends RoboActivity {
     private static final int CAMERA_REQUEST = 1877;
     private static final int MAX_HEIGHT = 650;
 
-    @InjectView(R.id.beer_image) private ImageView beerImage;
-    @InjectView(R.id.title_entry) private EditText nameText;
-    @InjectView(R.id.aroma_entry) private EditText aromaText;
-    @InjectView(R.id.appearance_entry) private EditText appearanceText;
-    @InjectView(R.id.taste_entry) private EditText tasteText;
-    @InjectView(R.id.rate_beer) private RatingBar rating;
-    private Uri imageUri;
+    @InjectView(R.id.beer_image) protected ImageView beerImage;
+    @InjectView(R.id.title_entry) protected EditText nameText;
+    @InjectView(R.id.aroma_entry) protected EditText aromaText;
+    @InjectView(R.id.appearance_entry) protected EditText appearanceText;
+    @InjectView(R.id.taste_entry) protected EditText tasteText;
+    @InjectView(R.id.rate_beer) protected RatingBar rating;
+    protected Uri imageUri;
 
-    @Inject LagerDatabaseHelper dbHelper;
+    @Inject protected LagerDatabaseHelper dbHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,19 @@ public class AddLagerActivity extends RoboActivity {
         }
     }
 
+    public void saveEntry() {
+        String name = nameText.getText().toString();
+        String aroma = aromaText.getText().toString();
+        String appearance = appearanceText.getText().toString();
+        String taste = tasteText.getText().toString();
+        String ratingNum = "" + (int) rating.getRating();
+        String image = (imageUri != null) ? imageUri.toString() : "";
+
+        dbHelper.addLagerEntry(name, aroma, appearance, taste, ratingNum, image);
+    }
+
+    /* Private Methods */
+
     private boolean addBeerPicture() {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
@@ -123,16 +136,5 @@ public class AddLagerActivity extends RoboActivity {
             imageFile.delete();
         }
         finish();
-    }
-
-    private void saveEntry() {
-        String name = nameText.getText().toString();
-        String aroma = aromaText.getText().toString();
-        String appearance = appearanceText.getText().toString();
-        String taste = tasteText.getText().toString();
-        String ratingNum = "" + (int) rating.getRating();
-        String image = (imageUri != null) ? imageUri.toString() : "";
-
-        dbHelper.addLagerEntry(name, aroma, appearance, taste, ratingNum, image);
     }
 }

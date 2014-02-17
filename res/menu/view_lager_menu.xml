@@ -7,19 +7,4 @@
         android:title="@string/edit_button"
         android:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/add_picture_button"
-        android:icon="@drawable/ic_action_camera"
-        android:title="@string/add_picture_button"
-        android:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/cancel_button"
-        android:title="@string/cancel_button"
-        android:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/save_button"
-        android:title="@string/save_button"
-        android:showAsAction="ifRoom" />
 </menu>

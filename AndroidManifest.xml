@@ -30,6 +30,7 @@
             android:name=".activity.AddLagerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ViewLagerActivity" />
+        <activity android:name=".activity.EditLagerActivity" />
 
     </application>
 </manifest>

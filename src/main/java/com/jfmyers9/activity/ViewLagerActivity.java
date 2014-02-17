@@ -1,13 +1,16 @@
 package com.jfmyers9.activity;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.google.inject.Inject;
+import com.jfmyers9.LagerDatabaseHelper;
 import com.jfmyers9.LagerEntry;
 import com.jfmyers9.R;
 import com.jfmyers9.fragment.LagerHistoryFragment;
@@ -23,6 +26,11 @@ public class ViewLagerActivity extends RoboActivity {
     @InjectView(R.id.rate_beer) private RatingBar rating;
     @InjectView(R.id.taste_entry) private TextView tasteText;
 
+    @Inject private LagerDatabaseHelper dbHelper;
+
+    private LagerEntry currentEntry;
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_lager_layout);
@@ -30,13 +38,34 @@ public class ViewLagerActivity extends RoboActivity {
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        prefillLagerInformation(getIntent().getExtras());
+        currentEntry = getIntent().getExtras().getParcelable(LagerHistoryFragment.LAGER_KEY);
+
+        prefillLagerInformation();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.view_lager_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshCurrentEntry();
+        prefillLagerInformation();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.edit_button:
+                openEditLager();
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
@@ -45,8 +74,13 @@ public class ViewLagerActivity extends RoboActivity {
 
     /* Private Methods */
 
-    private void prefillLagerInformation(Bundle arguments) {
-        LagerEntry currentEntry = arguments.getParcelable(LagerHistoryFragment.LAGER_KEY);
+    private void openEditLager() {
+        Intent intent = new Intent(this, EditLagerActivity.class);
+        intent.putExtra(LagerHistoryFragment.LAGER_KEY, currentEntry);
+        startActivity(intent);
+    }
+
+    private void prefillLagerInformation() {
         int lagerRating = Integer.parseInt(currentEntry.getRating());
 
         if (!currentEntry.getImage().isEmpty()) {
@@ -59,5 +93,9 @@ public class ViewLagerActivity extends RoboActivity {
         rating.setRating(lagerRating);
 
         setTitle(currentEntry.getName());
+    }
+
+    private void refreshCurrentEntry() {
+        currentEntry = dbHelper.getLagerEntryById(currentEntry.getId());
     }
 }
