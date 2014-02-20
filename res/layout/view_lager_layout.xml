@@ -30,25 +30,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_label"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="10pt"
             android:layout_below="@id/rate_beer" />
 
         <TextView
             android:id="@+id/title_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title_label" />
+            android:layout_below="@id/title_label"
+            android:textSize="8pt"
+            android:gravity="right"
+            android:layout_marginBottom="20px"/>
 
         <TextView
             android:id="@+id/aroma_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/aroma_label"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="10pt"
             android:layout_below="@id/title_entry" />
 
         <TextView
             android:id="@+id/aroma_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:textSize="8pt"
+            android:gravity="right"
             android:layout_below="@id/aroma_label" />
 
         <TextView
@@ -56,12 +68,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/appearance_label"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="10pt"
             android:layout_below="@id/aroma_entry" />
 
         <TextView
             android:id="@+id/appearance_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:textSize="8pt"
+            android:gravity="right"
             android:layout_below="@id/appearance_label" />
 
         <TextView
@@ -69,12 +87,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/taste_label"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="10pt"
             android:layout_below="@id/appearance_entry" />
 
         <TextView
             android:id="@+id/taste_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:textSize="8pt"
+            android:gravity="right"
             android:layout_below="@id/taste_label" />
 
     </RelativeLayout>
